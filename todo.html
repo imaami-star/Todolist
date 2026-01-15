@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="todo.css">
     <title>To-do</title>
 </head>
 
@@ -40,7 +41,7 @@
             if (!deskrip) {
                 alert("deskripsi nya isi ya!")
                 return
-            }
+            } alert("Todo berhasil di tambahkan")
 
             //simpan ke localstorage
             let todos = localStorage.getItem('todo'); // todo itu nama localstorage nya
@@ -65,7 +66,9 @@
             arr.forEach(function (t, idx) {
                 const li = document.createElement('li')
 
-                const span = document.createElement('span')
+                const textWrap = document.createElement('div')
+
+                const span = document.createElement('strong')
                 span.textContent = t.value
 
                 const descP = document.createElement('p')
@@ -75,27 +78,56 @@
                 const editBtn = document.createElement('button')
                 editBtn.type = 'button'
                 editBtn.textContent = 'Edit'
+                editBtn.style.marginLeft = 'auto' // biar button nya pindah ke kiri 
+                editBtn.style.padding = '5px 10px'
+                editBtn.style.border = 'none'
+                editBtn.style.borderRadius = '8px'
+                editBtn.style.backgroundColor = '#E4C087'
+
 
                 //Edit mode 
                 editBtn.addEventListener('click', function () {
+                    const editWrapp = document.createElement('div')
+                    editWrapp.style.display = 'flex'
+                    editWrapp.style.flexDirection = 'column'
+                    editWrapp.style.gap = '10px'
+                    // editWrapp.style.flexGrow = '1'
+
                     const input = document.createElement('input')
                     input.type = 'text'
+                    input.style.width = '400px'
+                    input.style.margin = '12px'
+                    // input.sty.display = 'block'
                     input.value = t.value
 
                     const desInput = document.createElement('textarea')
                     desInput.type = 'text'
+                    desInput.style.width = '500px'
+                    desInput.style.height = '60px'
                     desInput.value = t.deskrip
 
 
                     // Tombol save button 
                     const svBtn = document.createElement('button');
                     svBtn.type = 'button';
+                    svBtn.style.marginLeft = 'auto' // biar button nya pindah ke kiri 
+                    svBtn.style.padding = '5px 10px'
+                    svBtn.style.border = 'none'
+                    svBtn.style.borderRadius = '8px'
+                    svBtn.style.backgroundColor = '#4988C4'
+                    svBtn.style.color = '#ffff'
                     svBtn.textContent = 'Save';
 
                     // Tombol cancel 
                     const cancelBtn = document.createElement('button');
                     cancelBtn.type = 'button';
-                    cancelBtn.textContent = 'cancel';
+                    cancelBtn.style.margin = '5px' // biar button nya pindah ke kiri 
+                    cancelBtn.style.padding = '5px 10px'
+                    cancelBtn.style.border = 'none'
+                    cancelBtn.style.borderRadius = '8px'
+                    cancelBtn.style.backgroundColor = '#607B8F'
+                    cancelBtn.style.color = '#ffff'
+                    cancelBtn.textContent = 'Cancel';
 
                     //klik manual button cancel 
                     cancelBtn.addEventListener('click', function () {
@@ -142,7 +174,6 @@
                     })
 
                     // Tambah input, tombol save, ketika edit di klik 
-
                     li.innerHTML = '';
                     li.appendChild(input)
                     li.appendChild(desInput)
@@ -156,6 +187,13 @@
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'delete'
                 deleteBtn.type = 'button'
+                deleteBtn.style.padding = '5px 10px'
+                deleteBtn.style.marginLeft = '5px'
+                deleteBtn.style.position = 'right'
+                deleteBtn.style.border = 'none'
+                deleteBtn.style.borderRadius = '8px'
+                deleteBtn.style.backgroundColor = '#FA6868'
+                deleteBtn.style.color = '#ffff'
                 deleteBtn.addEventListener('click', function () {
                     if (confirm('Yakin ingin di hapus?')) {
                         alert('todo berhasil di hapus')
@@ -165,8 +203,12 @@
                     }
                 })
 
-                li.appendChild(span)
-                li.appendChild(descP)
+                // di simpan jadi satu content di textWrapp
+                textWrap.appendChild(span)
+                textWrap.appendChild(descP)
+
+                
+                li.appendChild(textWrap)
                 li.appendChild(editBtn)
                 li.appendChild(deleteBtn)
                 todolist.appendChild(li)
