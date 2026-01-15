@@ -8,16 +8,19 @@
 </head>
 
 <body>
-    <h1>TODO-LIST</h1>
-    <form action="to-do list" id="form-todo">
-        <input type="text" name="content" id="content" placeholder="nama kegiatan">
-        <textarea type="text" name="deskripsi" id="deskripsi" placeholder="deskripsi kegiatan"></textarea>
-        <button type="submit" id="todo-submit">Submit</button>
+    <div class="main">
+        <h1>TODO-LIST</h1>
+        <div class="container">
+            <form action="to-do list" id="form-todo">
+                <input type="text" name="content" id="content" placeholder="nama kegiatan">
+                <textarea type="text" name="deskripsi" id="deskripsi" placeholder="deskripsi kegiatan"></textarea>
+                <button type="submit" id="todo-submit">Submit</button>
+            </form>
+        </div>
+        <ul id="todo-list">
 
-    </form>
-    <ul id="todo-list">
-
-    </ul>
+        </ul>
+    </div>
     <script>
         const form = document.getElementById('form-todo')
         const content = document.getElementById('content')
@@ -34,19 +37,23 @@
                 alert(" To do list harus di isi!")
                 return
             }
-            
+            if (!deskrip) {
+                alert("deskripsi nya isi ya!")
+                return
+            }
+
             //simpan ke localstorage
             let todos = localStorage.getItem('todo'); // todo itu nama localstorage nya
             todos = todos ? JSON.parse(todos) : []
 
-            todos.push({value, deskrip})
+            todos.push({ value, deskrip })
 
             //simpan array yang baru ke di localstorage
             localStorage.setItem('todo', JSON.stringify(todos))
             console.log(todos)
             renderTodos() // manggil function
             content.value = ''
-            deskrip.value = ''
+            deskripsi.value = ''
 
         })
 
@@ -57,9 +64,9 @@
             todolist.innerHTML = ''
             arr.forEach(function (t, idx) {
                 const li = document.createElement('li')
-        
+
                 const span = document.createElement('span')
-                span.textContent = t.value 
+                span.textContent = t.value
 
                 const descP = document.createElement('p')
                 descP.textContent = t.deskrip
@@ -73,7 +80,7 @@
                 editBtn.addEventListener('click', function () {
                     const input = document.createElement('input')
                     input.type = 'text'
-                    input.value = t.value 
+                    input.value = t.value
 
                     const desInput = document.createElement('textarea')
                     desInput.type = 'text'
@@ -106,17 +113,17 @@
 
                     // save manual 
                     svBtn.addEventListener('click', function () {
-                        const newVal = {value:input.value, deskrip:desInput.value}
+                        const newVal = { value: input.value, deskrip: desInput.value }
                         if (confirm('Yakin todo ini di edit?')) {
                             console.log(newVal)
                             if (newVal) {
-                            const current = localStorage.getItem('todo')
-                            const listArr = current ? JSON.parse(current) : []
+                                const current = localStorage.getItem('todo')
+                                const listArr = current ? JSON.parse(current) : []
 
-                            listArr[idx] = newVal  
-                            localStorage.setItem('todo', JSON.stringify(listArr))
-                            renderTodos()
-                            console.log(listArr)
+                                listArr[idx] = newVal
+                                localStorage.setItem('todo', JSON.stringify(listArr))
+                                renderTodos()
+                                console.log(listArr)
                             }
                         }
                     })
